@@ -1,6 +1,6 @@
 import generateToken from "../../lib/generateToken.js";
 import User from "../../models/user.model.js";
-import bcrypt from "bcrypt"
+import bcrypt from "bcrypt";
 const login = async (req, res) => {
   const { email, password } = req.body;
 
@@ -16,12 +16,16 @@ const login = async (req, res) => {
   }
   //check the password is correct or not
   const isMatch = await bcrypt.compare(password, user.password);
+
   if (!isMatch) {
     return res.status(400).json({ message: "Invalid credentials" });
   }
 
   // Generate JWT token
-  const token = generateToken(user._id, user.role);
+  const token = generateToken({
+    id: user._id,
+    role: user.role,
+  });
 
   //store into cookies
   res.cookie("token", token, {
@@ -31,7 +35,7 @@ const login = async (req, res) => {
     maxAge: 30 * 60 * 1000, // 30 min (in ms)
   });
 
-  res.status(200).json({
+  res.status(201).json({
     message: "Login successfull",
     user: {
       id: user._id,

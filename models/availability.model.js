@@ -5,33 +5,36 @@ const availabilitySchema = new mongoose.Schema(
     professorId: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "User",
-      required: true
+      required: true,
     },
     date: {
-      type: String, // e.g. "2025-01-05"
-      required: true
+      type: String,
+      required: true,
     },
     startTime: {
-      type: String, // "10:00"
-      required: true
+      type: String,
+      required: true,
     },
     endTime: {
-      type: String, // "10:30"
-      required: true
+      type: String,
+      required: true,
+    },
+    meetingLink: {
+      type: String,
+      default: null,
     },
     isBooked: {
       type: Boolean,
-      default: false
-    }
+      default: false,
+    },
   },
   { timestamps: true }
 );
 
 const Availability = mongoose.model("Availability", availabilitySchema);
-export default Availability
+
+availabilitySchema.index({ professorId: 1, date: 1, startTime: 1 });
 
 
-/* 
-isBooked-> false ka mtlb ki slot free hi
-isBooked -> true ka mtlb ki slot free nhi hi 
-*/ 
+//i added indexing for faster slot lookup
+export default Availability;

@@ -1,5 +1,5 @@
 import User from "../../models/user.model.js";
-import bcrypt from "bcrypt"
+import bcrypt from "bcrypt";
 const singup = async (req, res) => {
   try {
     const { name, email, password, role } = req.body;
@@ -29,7 +29,7 @@ const singup = async (req, res) => {
       role,
     });
 
-    return res.status(200).json({
+    return res.status(201).json({
       message: "User Created SuccessFully",
       user: {
         id: user._id,

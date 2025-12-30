@@ -1,0 +1,14 @@
+import express from "express"
+import protectRoute from "../middleware/auth.middleware.js";
+import availableSlots from "../controller/StudentController/available_slots.controller.js";
+import bookSlot from "../controller/StudentController/book_slots.controller.js";
+
+
+const studentRouter=express.Router();
+
+
+studentRouter.get('/available-slots',protectRoute,availableSlots);
+studentRouter.post('/book-slot/:availabilityId',protectRoute,bookSlot);
+
+
+export default studentRouter;

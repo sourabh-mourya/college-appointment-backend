@@ -12,9 +12,9 @@ A comprehensive REST API built with Node.js, Express.js, and MongoDB for managin
 - [Environment Variables](#-environment-variables)
 - [Database Models](#-database-models)
 - [API Documentation](#-api-documentation)
-- [Testing with Postman](#-testing-with-postman)
+- [Complete Testing Guide](#-complete-testing-guide)
 - [User Flow Example](#-user-flow-example)
-- [Common Issues](#-common-issues--solutions)
+- [Common Issues](#-common-issues)
 
 ---
 
@@ -368,7 +368,7 @@ If you see these messages, your server is ready! 🎉
 
 ### Base URL
 ```
-http://localhost:5000/api
+http://localhost:3000/api
 ```
 
 ---
@@ -377,7 +377,7 @@ http://localhost:5000/api
 
 ### 1. Register User (Signup)
 
-**Endpoint:** `POST /api/signup`
+**Endpoint:** `POST http://localhost:3000/api/signup`
 
 **Request Body:**
 ```json
@@ -392,7 +392,13 @@ http://localhost:5000/api
 **Success Response (201):**
 ```json
 {
-  "message": "User registered successfully"
+  "message": "User Created SuccessFully",
+  "user": {
+    "id": "6954d7a6a8c152d5b76a70a4",
+    "name": "Professor One",
+    "email": "prof1@college.edu",
+    "role": "professor"
+  }
 }
 ```
 
@@ -416,7 +422,7 @@ Email already exists (400):
 
 ### 2. Login
 
-**Endpoint:** `POST /api/login`
+**Endpoint:** `POST http://localhost:3000/api/login`
 
 **Request Body:**
 ```json
@@ -436,7 +442,7 @@ Email already exists (400):
     "email": "prof1@college.edu",
     "role": "professor"
   },
-  "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9..."
+  "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY2ZjJhOGMzZThmNGI5YTJjMWQxMDAwMSIsInJvbGUiOiJwcm9mZXNzb3IiLCJpYXQiOjE3NjcxNjU3NjIsImV4cCI6MTc2NzE2NzU2Mn0.MgjrPNf4Yjx_j_w0x2PYdbldQkpKQhnJgtWLGiilGhY"
 }
 ```
 
@@ -462,7 +468,7 @@ All professor endpoints require authentication and professor role.
 
 ### 1. Create Availability
 
-**Endpoint:** `POST /api/professor/create_availability_time`
+**Endpoint:** `POST http://localhost:3000/api/professor/create_availability_time`
 
 **Headers:**
 ```
@@ -507,7 +513,7 @@ Cookie: token=<jwt_token>
 
 ### 2. View All Appointments
 
-**Endpoint:** `GET /api/professor/appointments`
+**Endpoint:** `GET http://localhost:3000/api/professor/appointments`
 
 **Headers:**
 ```
@@ -548,7 +554,7 @@ Cookie: token=<jwt_token>
 
 ### 3. Cancel Appointment
 
-**Endpoint:** `POST /api/professor/cancel_appointments/:appointmentId`
+**Endpoint:** `POST http://localhost:3000/api/professor/cancel_appointments/:appointmentId`
 
 **Headers:**
 ```
@@ -560,7 +566,7 @@ Cookie: token=<jwt_token>
 
 **Example:**
 ```
-POST /api/professor/cancel_appointments/6954c6e15b20217cabd07f8a
+POST http://localhost:3000/api/professor/cancel_appointments/6954c6e15b20217cabd07f8a
 ```
 
 **Success Response (200):**
@@ -602,7 +608,7 @@ All student endpoints require authentication and student role.
 
 ### 1. View Available Slots
 
-**Endpoint:** `GET /api/student/available-slots`
+**Endpoint:** `GET http://localhost:3000/api/student/available-slots`
 
 **Headers:**
 ```
@@ -641,7 +647,7 @@ Cookie: token=<jwt_token>
 **No Slots Response (200):**
 ```json
 {
-  "message": "There is no slots available"
+  "message": "There is no slots available "
 }
 ```
 
@@ -655,7 +661,7 @@ Cookie: token=<jwt_token>
 
 ### 2. Book Appointment
 
-**Endpoint:** `POST /api/student/book-slot/:availabilityId`
+**Endpoint:** `POST http://localhost:3000/api/student/book-slot/:availabilityId`
 
 **Headers:**
 ```
@@ -667,7 +673,7 @@ Cookie: token=<jwt_token>
 
 **Example:**
 ```
-POST /api/student/book-slot/6954c6b05b20217cabd07f82
+POST http://localhost:3000/api/student/book-slot/6954c6b05b20217cabd07f82
 ```
 
 **Success Response (201):**
@@ -714,7 +720,7 @@ Slot not found (404):
 
 ### 3. View My Appointments
 
-**Endpoint:** `GET /api/student/appointments`
+**Endpoint:** `GET http://localhost:3000/api/student/appointments`
 
 **Headers:**
 ```
@@ -741,7 +747,7 @@ Cookie: token=<jwt_token>
 **No Appointments Response (200):**
 ```json
 {
-  "message": "There is no slots available"
+  "message": "There is no slots available "
 }
 ```
 
@@ -752,9 +758,11 @@ Cookie: token=<jwt_token>
 
 ---
 
-## 🧪 Testing with Postman
+## 🧪 Complete Testing Guide
 
-### Initial Setup in Postman
+### Testing with Postman
+
+#### Initial Setup in Postman
 
 1. **Download and Install Postman** from [postman.com](https://www.postman.com/downloads/)
 
@@ -762,26 +770,20 @@ Cookie: token=<jwt_token>
    - Click "New" → "Collection"
    - Name it: "College Appointment System"
 
-3. **Set Base URL Variable**
-   - Click on Collection → "Variables" tab
-   - Add variable:
-     - Variable: `baseUrl`
-     - Initial Value: `http://localhost:5000/api`
-     - Current Value: `http://localhost:5000/api`
-
-4. **Enable Cookie Handling**
+3. **Enable Cookie Handling**
    - Postman automatically handles cookies
    - No additional setup needed
 
 ---
 
-### Complete Test Flow
+### Complete Test Sequence
 
 #### Phase 1: Create Test Users
 
-**Request 1: Register Professor**
+**Test 1: Register Professor**
+
 ```
-POST {{baseUrl}}/signup
+POST http://localhost:3000/api/signup
 Content-Type: application/json
 
 Body:
@@ -791,11 +793,25 @@ Body:
   "password": "password",
   "role": "professor"
 }
+
+Expected Response (201):
+{
+  "message": "User Created SuccessFully",
+  "user": {
+    "id": "66f2a8c3e8f4b9a2c1d10001",
+    "name": "Professor 1",
+    "email": "prof1@college.edu",
+    "role": "professor"
+  }
+}
 ```
 
-**Request 2: Register Student 1**
+---
+
+**Test 2: Register Student 1**
+
 ```
-POST {{baseUrl}}/signup
+POST http://localhost:3000/api/signup
 Content-Type: application/json
 
 Body:
@@ -805,11 +821,25 @@ Body:
   "password": "password",
   "role": "student"
 }
+
+Expected Response (201):
+{
+  "message": "User Created SuccessFully",
+  "user": {
+    "id": "66f2a8c3e8f4b9a2c1d10102",
+    "name": "Student 1",
+    "email": "student1@college.edu",
+    "role": "student"
+  }
+}
 ```
 
-**Request 3: Register Student 2**
+---
+
+**Test 3: Register Student 2**
+
 ```
-POST {{baseUrl}}/signup
+POST http://localhost:3000/api/signup
 Content-Type: application/json
 
 Body:
@@ -819,15 +849,27 @@ Body:
   "password": "password",
   "role": "student"
 }
+
+Expected Response (201):
+{
+  "message": "User Created SuccessFully",
+  "user": {
+    "id": "66f2a8c3e8f4b9a2c1d10103",
+    "name": "Student 2",
+    "email": "student2@college.edu",
+    "role": "student"
+  }
+}
 ```
 
 ---
 
 #### Phase 2: Professor Creates Availability
 
-**Request 4: Login as Professor**
+**Test 4: Login as Professor**
+
 ```
-POST {{baseUrl}}/login
+POST http://localhost:3000/api/login
 Content-Type: application/json
 
 Body:
@@ -835,13 +877,28 @@ Body:
   "email": "prof1@college.edu",
   "password": "password"
 }
+
+Expected Response (200):
+{
+  "message": "Login successfull",
+  "user": {
+    "id": "66f2a8c3e8f4b9a2c1d10001",
+    "name": "Professor 1",
+    "email": "prof1@college.edu",
+    "role": "professor"
+  },
+  "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9..."
+}
 ```
 
-**⭐ Important:** After this request, Postman automatically stores the cookie. You don't need to copy/paste tokens!
+**⭐ Important:** After this request, Postman automatically stores the cookie!
 
-**Request 5: Create Slot 1**
+---
+
+**Test 5: Create Slot 1**
+
 ```
-POST {{baseUrl}}/professor/create_availability_time
+POST http://localhost:3000/api/professor/create_availability_time
 Content-Type: application/json
 
 Body:
@@ -851,11 +908,29 @@ Body:
   "endTime": "10:30",
   "meetingLink": "https://meet.google.com/p1-slot1"
 }
+
+Expected Response (201):
+{
+  "message": "Availability created",
+  "availability": {
+    "_id": "6954c6b05b20217cabd07f82",
+    "professorId": "66f2a8c3e8f4b9a2c1d10001",
+    "date": "2025-01-10",
+    "startTime": "10:00",
+    "endTime": "10:30",
+    "meetingLink": "https://meet.google.com/p1-slot1",
+    "isBooked": false,
+    "createdAt": "2025-12-31T06:46:08.174Z"
+  }
+}
 ```
 
-**Request 6: Create Slot 2**
+---
+
+**Test 6: Create Slot 2**
+
 ```
-POST {{baseUrl}}/professor/create_availability_time
+POST http://localhost:3000/api/professor/create_availability_time
 Content-Type: application/json
 
 Body:
@@ -865,15 +940,31 @@ Body:
   "endTime": "10:30",
   "meetingLink": "https://meet.google.com/p1-slot2"
 }
+
+Expected Response (201):
+{
+  "message": "Availability created",
+  "availability": {
+    "_id": "6954c6b05b20217cabd07f83",
+    "professorId": "66f2a8c3e8f4b9a2c1d10001",
+    "date": "2025-03-10",
+    "startTime": "10:00",
+    "endTime": "10:30",
+    "meetingLink": "https://meet.google.com/p1-slot2",
+    "isBooked": false,
+    "createdAt": "2025-12-31T06:47:15.234Z"
+  }
+}
 ```
 
 ---
 
 #### Phase 3: Student 1 Books Slot
 
-**Request 7: Login as Student 1**
+**Test 7: Login as Student 1**
+
 ```
-POST {{baseUrl}}/login
+POST http://localhost:3000/api/login
 Content-Type: application/json
 
 Body:
@@ -881,30 +972,88 @@ Body:
   "email": "student1@college.edu",
   "password": "password"
 }
+
+Expected Response (200):
+{
+  "message": "Login successfull",
+  "user": {
+    "id": "66f2a8c3e8f4b9a2c1d10102",
+    "name": "Student 1",
+    "email": "student1@college.edu",
+    "role": "student"
+  },
+  "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9..."
+}
 ```
 
-**Request 8: View Available Slots**
+---
+
+**Test 8: View Available Slots**
+
 ```
-GET {{baseUrl}}/student/available-slots
+GET http://localhost:3000/api/student/available-slots
+
+Expected Response (200):
+{
+  "message": "Available slots",
+  "data": [
+    {
+      "_id": "6954c6b05b20217cabd07f82",
+      "professorId": {
+        "name": "Professor 1"
+      },
+      "date": "2025-01-10",
+      "startTime": "10:00",
+      "endTime": "10:30",
+      "meetingLink": "https://meet.google.com/p1-slot1"
+    },
+    {
+      "_id": "6954c6b05b20217cabd07f83",
+      "professorId": {
+        "name": "Professor 1"
+      },
+      "date": "2025-03-10",
+      "startTime": "10:00",
+      "endTime": "10:30",
+      "meetingLink": "https://meet.google.com/p1-slot2"
+    }
+  ]
+}
 ```
 
-**📝 Note:** Copy one `_id` from the response to use in next request.
+**📝 Note:** Copy the first `_id` (6954c6b05b20217cabd07f82) to use in next request.
 
-**Request 9: Book Slot**
+---
+
+**Test 9: Book Slot 1**
+
 ```
-POST {{baseUrl}}/student/book-slot/PASTE_AVAILABILITY_ID_HERE
+POST http://localhost:3000/api/student/book-slot/6954c6b05b20217cabd07f82
 
-Example:
-POST {{baseUrl}}/student/book-slot/6954c6b05b20217cabd07f82
+Expected Response (201):
+{
+  "message": "Appointment booked successfully",
+  "data": {
+    "studentId": "66f2a8c3e8f4b9a2c1d10102",
+    "professorId": "66f2a8c3e8f4b9a2c1d10001",
+    "availabilityId": "6954c6b05b20217cabd07f82",
+    "status": "Booked",
+    "_id": "6954c6e15b20217cabd07f8a",
+    "createdAt": "2025-12-31T06:46:57.174Z",
+    "updatedAt": "2025-12-31T06:46:57.174Z",
+    "__v": 0
+  }
+}
 ```
 
 ---
 
 #### Phase 4: Student 2 Books Another Slot
 
-**Request 10: Login as Student 2**
+**Test 10: Login as Student 2**
+
 ```
-POST {{baseUrl}}/login
+POST http://localhost:3000/api/login
 Content-Type: application/json
 
 Body:
@@ -912,25 +1061,78 @@ Body:
   "email": "student2@college.edu",
   "password": "password"
 }
+
+Expected Response (200):
+{
+  "message": "Login successfull",
+  "user": {
+    "id": "66f2a8c3e8f4b9a2c1d10103",
+    "name": "Student 2",
+    "email": "student2@college.edu",
+    "role": "student"
+  },
+  "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9..."
+}
 ```
 
-**Request 11: View Available Slots**
+---
+
+**Test 11: View Available Slots**
+
 ```
-GET {{baseUrl}}/student/available-slots
+GET http://localhost:3000/api/student/available-slots
+
+Expected Response (200):
+{
+  "message": "Available slots",
+  "data": [
+    {
+      "_id": "6954c6b05b20217cabd07f83",
+      "professorId": {
+        "name": "Professor 1"
+      },
+      "date": "2025-03-10",
+      "startTime": "10:00",
+      "endTime": "10:30",
+      "meetingLink": "https://meet.google.com/p1-slot2"
+    }
+  ]
+}
 ```
 
-**Request 12: Book Different Slot**
+**Note:** Only one slot available now (first slot is booked by Student 1)
+
+---
+
+**Test 12: Book Slot 2**
+
 ```
-POST {{baseUrl}}/student/book-slot/PASTE_DIFFERENT_AVAILABILITY_ID
+POST http://localhost:3000/api/student/book-slot/6954c6b05b20217cabd07f83
+
+Expected Response (201):
+{
+  "message": "Appointment booked successfully",
+  "data": {
+    "studentId": "66f2a8c3e8f4b9a2c1d10103",
+    "professorId": "66f2a8c3e8f4b9a2c1d10001",
+    "availabilityId": "6954c6b05b20217cabd07f83",
+    "status": "Booked",
+    "_id": "6954c7205b20217cabd07f92",
+    "createdAt": "2025-12-31T06:48:00.456Z",
+    "updatedAt": "2025-12-31T06:48:00.456Z",
+    "__v": 0
+  }
+}
 ```
 
 ---
 
 #### Phase 5: Professor Manages Appointments
 
-**Request 13: Login as Professor Again**
+**Test 13: Login as Professor Again**
+
 ```
-POST {{baseUrl}}/login
+POST http://localhost:3000/api/login
 Content-Type: application/json
 
 Body:
@@ -938,30 +1140,76 @@ Body:
   "email": "prof1@college.edu",
   "password": "password"
 }
+
+Expected Response (200):
+{
+  "message": "Login successfull",
+  "user": {
+    "id": "66f2a8c3e8f4b9a2c1d10001",
+    "name": "Professor 1",
+    "email": "prof1@college.edu",
+    "role": "professor"
+  },
+  "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9..."
+}
 ```
 
-**Request 14: View All Appointments**
+---
+
+**Test 14: View All Appointments**
+
 ```
-GET {{baseUrl}}/professor/appointments
+GET http://localhost:3000/api/professor/appointments
+
+Expected Response (200):
+{
+  "messaage": "Professor appointment fetched successfully",
+  "appointments": [
+    {
+      "studentName": "Student 1",
+      "professorName": "Professor 1",
+      "date": "2025-01-10",
+      "startTime": "10:00",
+      "endTime": "10:30",
+      "status": "Booked"
+    },
+    {
+      "studentName": "Student 2",
+      "professorName": "Professor 1",
+      "date": "2025-03-10",
+      "startTime": "10:00",
+      "endTime": "10:30",
+      "status": "Booked"
+    }
+  ]
+}
 ```
 
-**📝 Note:** Copy an `appointmentId` (the `_id` field from appointment data) to cancel it.
+**📝 Note:** Both appointments are shown. You can cancel any appointment using its ID from the database.
 
-**Request 15: Cancel Student 1's Appointment**
-```
-POST {{baseUrl}}/professor/cancel_appointments/PASTE_APPOINTMENT_ID_HERE
+---
 
-Example:
-POST {{baseUrl}}/professor/cancel_appointments/6954c6e15b20217cabd07f8a
+**Test 15: Cancel Student 1's Appointment**
+
 ```
+POST http://localhost:3000/api/professor/cancel_appointments/6954c6e15b20217cabd07f8a
+
+Expected Response (200):
+{
+  "message": "Appointment cancelled successfully"
+}
+```
+
+**Note:** Use the appointment `_id` from Test 9's response.
 
 ---
 
 #### Phase 6: Verify Cancellation
 
-**Request 16: Login as Student 1**
+**Test 16: Login as Student 1**
+
 ```
-POST {{baseUrl}}/login
+POST http://localhost:3000/api/login
 Content-Type: application/json
 
 Body:
@@ -969,36 +1217,84 @@ Body:
   "email": "student1@college.edu",
   "password": "password"
 }
+
+Expected Response (200):
+{
+  "message": "Login successfull",
+  "user": {
+    "id": "66f2a8c3e8f4b9a2c1d10102",
+    "name": "Student 1",
+    "email": "student1@college.edu",
+    "role": "student"
+  },
+  "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9..."
+}
 ```
 
-**Request 17: Check My Appointments**
+---
+
+**Test 17: Check My Appointments**
+
 ```
-GET {{baseUrl}}/student/appointments
+GET http://localhost:3000/api/student/appointments
+
+Expected Response (200):
+{
+  "messaage": "Studnet appointment fetched successfully",
+  "appointments": [
+    {
+      "studentName": "Student 1",
+      "professorName": "Professor 1",
+      "date": "2025-01-10",
+      "startTime": "10:00",
+      "endTime": "10:30",
+      "status": "Cancelled"
+    }
+  ]
+}
 ```
 
-**Expected:** You should see status: "Cancelled"
+**✅ Status changed to "Cancelled"**
+
+---
+
+#### Phase 7: Verify Slot is Available Again
+
+**Test 18: View Available Slots Again**
+
+```
+GET http://localhost:3000/api/student/available-slots
+
+Expected Response (200):
+{
+  "message": "Available slots",
+  "data": [
+    {
+      "_id": "6954c6b05b20217cabd07f82",
+      "professorId": {
+        "name": "Professor 1"
+      },
+      "date": "2025-01-10",
+      "startTime": "10:00",
+      "endTime": "10:30",
+      "meetingLink": "https://meet.google.com/p1-slot1"
+    }
+  ]
+}
+```
+
+**✅ First slot is available again after cancellation!**
 
 ---
 
 ### Testing Authorization (Access Denied)
 
-**Request 18: Try Professor Endpoint as Student**
+**Test 19: Student Tries Professor Endpoint**
 
-First, login as student:
-```
-POST {{baseUrl}}/login
-Content-Type: application/json
+First, make sure you're logged in as a student (Test 16), then try:
 
-Body:
-{
-  "email": "student1@college.edu",
-  "password": "password"
-}
 ```
-
-Then try to create availability (should fail):
-```
-POST {{baseUrl}}/professor/create_availability_time
+POST http://localhost:3000/api/professor/create_availability_time
 Content-Type: application/json
 
 Body:
@@ -1008,17 +1304,15 @@ Body:
   "endTime": "14:30",
   "meetingLink": "https://meet.google.com/test"
 }
-```
 
-**Expected Response (403):**
-```json
+Expected Response (403):
 {
   "message": "Access Denied",
   "success": false
 }
 ```
 
-This confirms role-based authorization is working! ✅
+**✅ Role-based authorization is working correctly!**
 
 ---
 
@@ -1032,213 +1326,74 @@ This demonstrates the complete assignment flow:
 └─────────────────────────────────────────────────────────────┘
 
 Step 1: Student A1 logs in
-   → POST /api/login
+   → POST http://localhost:3000/api/login
    → email: student1@college.edu
    ✅ Receives JWT token in cookie
 
 Step 2: Professor P1 logs in
-   → POST /api/login
+   → POST http://localhost:3000/api/login
    → email: prof1@college.edu
    ✅ Receives JWT token in cookie
 
 Step 3: Professor P1 creates availability slots
-   → POST /api/professor/create_availability_time
+   → POST http://localhost:3000/api/professor/create_availability_time
    → Creates Slot T1: Jan 10, 10:00-10:30
    → Creates Slot T2: Mar 10, 10:00-10:30
    ✅ Both slots created with isBooked = false
 
 Step 4: Student A1 views available slots
-   → GET /api/student/available-slots
+   → GET http://localhost:3000/api/student/available-slots
    ✅ Sees both T1 and T2 (both unbooked)
 
 Step 5: Student A1 books slot T1
-   → POST /api/student/book-slot/{T1_availabilityId}
+   → POST http://localhost:3000/api/student/book-slot/{T1_availabilityId}
    ✅ Appointment created
    ✅ T1 slot: isBooked = true
    ✅ Status: "Booked"
 
 Step 6: Student A2 logs in
-   → POST /api/login
+   → POST http://localhost:3000/api/login
    → email: student2@college.edu
    ✅ Receives JWT token in cookie
 
 Step 7: Student A2 books slot T2
-   → GET /api/student/available-slots
+   → GET http://localhost:3000/api/student/available-slots
    ✅ Sees only T2 (T1 is booked, T2 is available)
-   → POST /api/student/book-slot/{T2_availabilityId}
+   → POST http://localhost:3000/api/student/book-slot/{T2_availabilityId}
    ✅ Appointment created
    ✅ T2 slot: isBooked = true
    ✅ Status: "Booked"
 
 Step 8: Professor P1 cancels A1's appointment
-   → GET /api/professor/appointments
+   → GET http://localhost:3000/api/professor/appointments
    ✅ Sees both appointments (A1 and A2)
-   → POST /api/professor/cancel_appointments/{A1_appointmentId}
+   → POST http://localhost:3000/api/professor/cancel_appointments/{A1_appointmentId}
    ✅ A1's appointment: status = "Cancelled"
    ✅ T1 slot: isBooked = false (available again)
 
 Step 9: Student A1 checks appointments
-   → GET /api/student/appointments
+   → GET http://localhost:3000/api/student/appointments
    ✅ Sees appointment with status: "Cancelled"
    ✅ Can now book a new slot if needed
 
+Step 10: Verify slot is available
+   → GET http://localhost:3000/api/student/available-slots
+   ✅ T1 slot appears in available slots again
 ```
 
 ---
 
-## 🐛 Common Issues & Solutions
+## 📝 Quick Reference - All Endpoints
 
-### Issue 1: MongoDB Connection Failed
-
-**Error Message:**
-```
-MongooseServerSelectionError: connect ECONNREFUSED 127.0.0.1:27017
-```
-
-**Solutions:**
-
-1. **Check if MongoDB is running:**
-   ```bash
-   # Windows
-   net start MongoDB
-   
-   # Mac
-   brew services start mongodb-community
-   
-   # Linux
-   sudo systemctl status mongod
-   sudo systemctl start mongod
-   ```
-
-2. **Verify MongoDB URI in .env:**
-   ```env
-   MONGODB_URI=mongodb://localhost:27017/college_appointment_system
-   ```
-
-3. **For MongoDB Atlas:**
-   - Check username and password are correct
-   - Verify IP address is whitelisted (or use 0.0.0.0/0)
-   - Check connection string format
+| Method | Endpoint | Role | Description |
+|--------|----------|------|-------------|
+| `POST` | `http://localhost:3000/api/signup` | Public | Register new user |
+| `POST` | `http://localhost:3000/api/login` | Public | User login |
+| `POST` | `http://localhost:3000/api/professor/create_availability_time` | Professor | Create availability slot |
+| `GET` | `http://localhost:3000/api/professor/appointments` | Professor | View all appointments |
+| `POST` | `http://localhost:3000/api/professor/cancel_appointments/:id` | Professor | Cancel appointment |
+| `GET` | `http://localhost:3000/api/student/available-slots` | Student | View available slots |
+| `POST` | `http://localhost:3000/api/student/book-slot/:id` | Student | Book appointment |
+| `GET` | `http://localhost:3000/api/student/appointments` | Student | View my appointments |
 
 ---
-
-### Issue 2: Port Already in Use
-
-**Error Message:**
-```
-Error: listen EADDRINUSE: address already in use :::5000
-```
-
-**Solutions:**
-
-1. **Kill process using port 5000:**
-   ```bash
-   # Windows
-   netstat -ano | findstr :5000
-   taskkill /PID <PID_NUMBER> /F
-   
-   # Mac/Linux
-   lsof -i :5000
-   kill -9 <PID>
-   ```
-
-2. **Change port in .env:**
-   ```env
-   PORT=5001
-   ```
-
----
-
-### Issue 3: JWT Token Invalid/Expired
-
-**Error Message:**
-```json
-{
-  "message": "Authentication failed",
-  "success": false
-}
-```
-
-**Solutions:**
-
-1. **Login again** - Token expires after 30 minutes
-2. **Check cookie in Postman:**
-   - Go to Cookies (under Send button)
-   - Verify token exists for localhost:5000
-3. **Clear cookies and login fresh:**
-   - Postman: Cookies → Remove All
-   - Then login again
-
----
-
-### Issue 4: Access Denied (403)
-
-**Error Message:**
-```json
-{
-  "message": "Access Denied",
-  "success": false
-}
-```
-
-**Solutions:**
-
-1. **Check your role:**
-   - Students cannot access `/api/professor/*` endpoints
-   - Professors cannot access `/api/student/*` endpoints
-
-2. **Login with correct credentials:**
-   - For professor endpoints: login as professor
-   - For student endpoints: login as student
-
-3. **Verify you're logged in:**
-   - Check if cookie exists
-   - Try logging in again
-
----
-
-### Issue 5: Slot Already Booked
-
-**Error Message:**
-```json
-{
-  "message": "This slot is already booked"
-}
-```
-
-**Solutions:**
-
-1. **Fetch available slots again:**
-   ```
-   GET /api/student/available-slots
-   ```
-   The booked slot won't appear in results
-
-2. **Choose a different slot** from available ones
-
-3. **Wait for professor to cancel** if you need that specific slot
-
----
-
-### Issue 6: Module Not Found
-
-**Error Message:**
-```
-Error: Cannot find module 'express'
-```
-
-**Solution:**
-```bash
-npm install
-```
-
-If problem persists:
-```bash
-rm -rf node_modules
-rm package-lock.json
-npm install
-```
-
----
-
-### Issue 7

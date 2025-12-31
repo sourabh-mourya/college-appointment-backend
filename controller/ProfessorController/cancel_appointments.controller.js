@@ -18,7 +18,7 @@ const cancelAppointment = async (req, res) => {
     }
 
     // 3. Mark appointment as cancelled
-    appointment.status = "cancelled";
+    appointment.status = "Cancelled";
     await appointment.save();
 
     // 4. Free the slot again

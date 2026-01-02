@@ -14,7 +14,6 @@ A comprehensive REST API built with Node.js, Express.js, and MongoDB for managin
 - [API Documentation](#-api-documentation)
 - [Complete Testing Guide](#-complete-testing-guide)
 - [User Flow Example](#-user-flow-example)
-- [Common Issues](#-common-issues)
 
 ---
 
@@ -163,42 +162,7 @@ npm install express mongoose jsonwebtoken bcryptjs cookie-parser dotenv cors
 npm install --save-dev nodemon
 ```
 
-### Step 3: Set Up MongoDB
-
-**Option A: Local MongoDB**
-
-1. Install MongoDB Community Edition
-2. Start MongoDB service:
-   ```bash
-   # Windows
-   net start MongoDB
-   
-   # Mac
-   brew services start mongodb-community
-   
-   # Linux
-   sudo systemctl start mongod
-   ```
-
-3. Verify MongoDB is running:
-   ```bash
-   mongosh
-   # or
-   mongo
-   ```
-
-**Option B: MongoDB Atlas (Cloud)**
-
-1. Create account at [MongoDB Atlas](https://www.mongodb.com/cloud/atlas)
-2. Create a new cluster (free tier available)
-3. Create a database user with password
-4. Whitelist your IP address (or use 0.0.0.0/0 for testing)
-5. Get your connection string (looks like): 
-   ```
-   mongodb+srv://<username>:<password>@cluster0.xxxxx.mongodb.net/
-   ```
-
-### Step 4: Configure Environment Variables
+### Step 3: Configure Environment Variables
 
 Create a `.env` file in the root directory:
 
@@ -228,8 +192,6 @@ MONGODB_URI=mongodb://localhost:27017/college_appointment_system
 JWT_SECRET=your_super_secret_jwt_key_change_this_in_production_minimum_32_characters
 JWT_EXPIRE=30m
 
-# Cookie Configuration
-COOKIE_EXPIRE=30
 ```
 
 ⚠️ **Important Security Notes:**
@@ -238,7 +200,7 @@ COOKIE_EXPIRE=30
 - Use different secrets for production
 - Generate random secret: `node -e "console.log(require('crypto').randomBytes(32).toString('hex'))"`
 
-### Step 5: Create .gitignore
+### Step 4: Create .gitignore
 
 Create a `.gitignore` file to prevent sensitive files from being committed:
 
@@ -250,20 +212,20 @@ node_modules/
 npm-debug.log*
 ```
 
-### Step 6: Update package.json Scripts
+### Step 5: Update package.json Scripts
 
 Add these scripts to your `package.json`:
 
 ```json
 {
   "scripts": {
-    "start": "node src/index.js",
-    "dev": "nodemon src/index.js"
+    "start": "nodemon index.js",
+    "dev": "nodemon index.js"
   }
 }
 ```
 
-### Step 7: Start the Server
+### Step 6: Start the Server
 
 **Development Mode (with auto-reload):**
 ```bash
@@ -278,7 +240,7 @@ npm start
 You should see:
 ```
 ✅ MongoDB Connected Successfully
-🚀 Server running on port 5000
+🚀 Server running on port 3000
 ```
 
 If you see these messages, your server is ready! 🎉
@@ -289,12 +251,10 @@ If you see these messages, your server is ready! 🎉
 
 | Variable | Description | Example | Required |
 |----------|-------------|---------|----------|
-| `PORT` | Server port number | `5000` | Yes |
+| `PORT` | Server port number | `3000` | Yes |
 | `NODE_ENV` | Environment mode | `development` | Yes |
 | `MONGODB_URI` | MongoDB connection string | `mongodb://localhost:27017/dbname` | Yes |
 | `JWT_SECRET` | Secret key for JWT signing | `mysecretkey123...` | Yes |
-| `JWT_EXPIRE` | Token expiration time | `30m` | Yes |
-| `COOKIE_EXPIRE` | Cookie expiration (minutes) | `30` | Yes |
 
 ---
 

@@ -1,6 +1,6 @@
 import Appointment from "../models/appointment.model.js";
 
-const getAppointments = async (userId, role) => {
+const   getAppointments = async (userId, role) => {
   let filter = {};
 
   if (role === "student") {

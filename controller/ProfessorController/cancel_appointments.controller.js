@@ -22,7 +22,7 @@ const cancelAppointment = async (req, res) => {
     await appointment.save();
 
     // 4. Free the slot again
-    await Availability.findByIdAndUpdate(appointment._id, {
+    await Availability.findByIdAndUpdate(appointment.availabilityId, {
       isBooked: false,
     });
 

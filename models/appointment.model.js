@@ -3,9 +3,7 @@ import User from "./user.model.js";
 
 const appointmentSchema = new mongoose.Schema(
   {
-    //appointment ke ander student id proferssor id hogi konsa student konse profesors ko book kr rha hi
-    //ur ek availbity ka rhege ki uss proferssor ka available time kya hi
-    studentId: {
+     studentId: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "User",
       required: true,

@@ -5,9 +5,7 @@ const bookSlot = async (req, res) => {
   try {
     const studentId = req.user._id;
     const { availabilityId } = req.params;
-    console.log("student id :-", studentId);
-
-    console.log("availablity id :-", availabilityId);
+   
     // Check slot exists
     const slotExists = await Availability.findOne({
       _id: availabilityId,

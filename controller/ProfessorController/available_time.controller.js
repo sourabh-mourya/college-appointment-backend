@@ -3,7 +3,7 @@ import Availability from "../../models/availability.model.js";
 const createAvailableTime = async (req, res) => {
   try {
     const professorId = req.user._id;
-    console.log("professorId :- ", professorId);
+  
 
     const { date, startTime, endTime, meetingLink } = req.body;
 
@@ -13,9 +13,7 @@ const createAvailableTime = async (req, res) => {
       });
     }
 
-    //duplicate slot  Prevention -> same Date + time duplicate na ho
-    //mtlb ki same professor same date ur time slot create na kr ske glti se bhi
-
+   
     const exits = await Availability.findOne({
       professorId,
       date,

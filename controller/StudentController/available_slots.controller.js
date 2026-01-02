@@ -2,7 +2,7 @@ import Availability from "../../models/availability.model.js";
 
 const availableSlots = async (req, res) => {
   try {
-    const availableSlots = await Availability.find({ isBooked: false }); //jo jo booked nhi hui hi wo slots bata do j
+    const availableSlots = await Availability.find({ isBooked: false }); 
 
     if (availableSlots.length === 0) {
       return res.status(404).json({
